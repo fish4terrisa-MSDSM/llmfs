@@ -49,11 +49,11 @@ We may add sglang and transformer failback backends later. We also support backe
  - v9fs
  - 9p (from plan9port)
 
-Not tested in a real Plan9 machine yet(a power loss unfortuately killed my 9front installation on a rpi3 with gefs. Maybe I'll test it in a plan9 QEMU machine.
+Not tested in a real Plan9 machine yet(a power loss unfortuately killed my 9front installation on a rpi3 with gefs.) Maybe I'll test it in a plan9 QEMU machine later.
 
 ## AI Policy
 We do not accept any kind of AI contribution, even if it's only used for commit description or docs.
-All code and docs in this repo is written by a human being, if there're mistakes it's because the author is ESL.
+All code and docs in this repo is written by human beings, if there're mistakes it's because the author is ESL.
 We support "AI is the content", we do not support "AI generated content".
 
 ## TODO
