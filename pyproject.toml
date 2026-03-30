@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools >= 77.0.3", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llmfs"
+dynamic = ["version"]
+authors = [
+  { name="fish4terrisa-MSDSM", email="flyingfish.msdsm@gmail.com" },
+]
+description = "LLM as 9p filesystem"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "AGPL-3.0-only"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+  "py9",
+]
+
+[project.optional-dependencies]
+vllm = [
+  "vllm",
+]
+
+[project.urls]
+Homepage = "https://github.com/fish4terrisa-MSDSM/llmfs"
+Issues = "https://github.com/fish4terrisa-MSDSM/llmfs/issues"
+
+[tool.setuptools]
+packages = ["llmfs", "llmfs.backends"]
+
+[tool.setuptools.dynamic]
+version = {attr = "llmfs.__version__"}

@@ -1,0 +1,92 @@
+# This is the initial config and it's changeable at runtime unless "readonly" is set
+# uint "readonly": 0(rw), >=0(ro)
+readonly = 0
+
+# Backend configs
+[backend]
+backend = "vllm"
+model_path = "/usr/src/llm/olmo"
+tokenizer_path = "/usr/src/llm/olmo"
+
+[backend.vllm.llm]
+# Just append the extra args here it's all passed to LLM() directly
+max_num_seqs = 1 
+max_num_batched_tokens = 4096
+max_model_len = 4096
+dtype = "auto"
+trust_remote_code = true  
+calculate_kv_scales = true 
+enforce_eager = true 
+gpu_memory_utilization = 0.76 
+swap_space = 2 
+kv_cache_dtype="fp8"
+
+[backend.vllm.samplingparams]
+# These params are directly appended to SamplingParams()
+temperature=0.6 
+top_p=0.95
+n=1
+max_tokens=2048
+
+
+[server]
+listenip = "127.0.0.1"
+port = 26980 
+
+[prompt]
+generation = """
+<|im_start|>interaction
+"""
+eos = "<|im_end|>"
+
+# "mode" defines the multiple modes of the mode
+[mode]
+default = "speak"
+enforce_structure = true
+
+[mode.think]
+start = "<think>"
+end = "</think>"
+# "stop" decides if the end token get added to the stop tokens list(if you want
+# it to generate further after this mode, then enable it)
+# 0(disabled), 1(enabled)
+stop = 1
+
+[mode.speak]
+start = "<speak>"
+end = "</speak>"
+stop = 1
+
+
+[role]
+
+# Necessary roles: system, assistant, environment, user
+# Forbidden role: null. The "null" role is reserved for plain text.
+# For any other role except system, the available vars: content
+[role.system]
+template = """
+<|im_start|>situation
+{content}<|im_end|>
+"""
+
+[role.environment]
+template = """
+<|im_start|>environment
+{content}<|im_end|>
+"""
+
+# The assistant might has different kinds of response (speak, think)
+# but for now, we only handle LLMs, and "content" contain the indicaters
+[role.assistant]
+template = """
+<|im_start|>interaction
+{content}<|im_end|>
+"""
+
+# "user" is an exception, acailable vars: content, name
+# The "name" contains the speaker's name and optional.
+[role.user]
+template = """
+<|im_start|>speaker<name>{name}</name>
+{content}<|im_end|>
+"""
