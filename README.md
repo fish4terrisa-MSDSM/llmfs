@@ -39,7 +39,7 @@ llmfs
 ## Backends
 
  - vllm
- - dummy (for testing purpose)
+ - dummy (for testing)
 
 We may add sglang and transformer failback backends later. We also support backend registration from 3rdparty modules, check [backend.py](./llmfs/backend.py) and [backends/](./llmfs/backends/) for details.
 
