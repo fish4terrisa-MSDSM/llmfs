@@ -5,6 +5,7 @@ import llmfs.backend as backend
 import llmfs.backends as backends
 import llmfs.backends.dummy as dummy
 import llmfs.backends.vllm as vllm_backend
+import llmfs.backends.sglang as sglang_backend
 def llmfs_init(config_path: str):
     config.config_init(config_path)
     fs.root_init()
@@ -12,6 +13,7 @@ def llmfs_init(config_path: str):
     # TODO: backends are registered here manually, should be dynamicly registered
     backend.backend_register("dummy", dummy.backend_dummy)
     backend.backend_register("vllm", vllm_backend.backend_vllm)
+    backend.backend_register("sglang", sglang_backend.backend_sglang)
     backend.llmserver_init()
 
 def main(config_path: str):
