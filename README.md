@@ -35,6 +35,7 @@ llmfs
 
  - [py9](https://git.sr.ht/~emru/py9)
  - vllm (Optional: Only if you want to use the vllm backend)
+ - sglang (Optional: Only if you want to use the sglang backend)
 
 ## Backends
 
