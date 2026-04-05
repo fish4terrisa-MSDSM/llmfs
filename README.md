@@ -39,9 +39,10 @@ llmfs
 ## Backends
 
  - vllm
+ - sglang (with little tested, sglang refuse to work on my orin nano, and somehow sglang uses more memory than vllm and it causes OOM)
  - dummy (for testing)
 
-We may add sglang and transformer failback backends later. We also support backend registration from 3rdparty modules, check [backend.py](./llmfs/backend.py) and [backends/](./llmfs/backends/) for details.
+We may add TensorRT-LLM and simple transformer failback backends later(for TensorRT-LLM, it'll wait until JetPack 7.2 release). We also support backend registration from 3rdparty modules, check [backend.py](./llmfs/backend.py) and [backends/](./llmfs/backends/) for details.
 
 ## Clients
 
