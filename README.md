@@ -26,6 +26,7 @@ llmfs
 │           └── <chatlogs matched with uuid as filename>
 ├── ctl
 │   ├── gen # Reading from it generates response. Writing to it does nothing.
+│   ├── clear # Read/Write it clear the chatlog
 │   └── new # Writing to it adds new chatlog. Reading from it does nothing.
 └── env
     └── <configs, key as filename>  # RO, config reloading isnt implemented yet
