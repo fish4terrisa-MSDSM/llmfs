@@ -41,6 +41,7 @@ def root_init():
     ctl.append(vfs.FILE("gen", Modes.DMREAD, get_content=data.get_response, virtual=True))
     # TODO: maybe /ctl/new only need write permission
     ctl.append(vfs.FILE("new", Modes.DMREAD | Modes.DMWRITE, set_content=data.append_to_data, virtual=True))
+    ctl.append(vfs.FILE("clear", Modes.DMREAD | Modes.DMWRITE, get_content=data.clear_data, set_content=data.clear_data, virtual=True))
     root.append(ctl)
     root.append(vfs.DIR("env", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=env.walk_env))
     root.append(vfs.DIR("by-id", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=data.walk_by_id))

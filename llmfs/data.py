@@ -28,6 +28,11 @@ without format.
 """
 data = {}
 
+def clear_data(_, _content=None):
+    global data
+    data.clear()
+    return ''
+
 def get_by_id(uuid: str):
     global data
     try:
