@@ -1,3 +1,4 @@
+import importlib
 from abc import ABC, abstractmethod
 
 import llmfs.config as config
@@ -42,7 +43,10 @@ def llmserver_init():
     global llmserver
     if available_backend.get(config.backend, False):
         tmp = available_backend[config.backend]
-        llmserver = tmp(config.model_path, config.tokenizer_path, config.backend_extra_args[config.backend]["llm"])
+        backend_path, class_name = tmp.rsplit('.', 1)
+        backend_module = importlib.import_module(backend_path)
+        backend = getattr(backend_module, class_name)
+        llmserver = backend(config.model_path, config.tokenizer_path, config.backend_extra_args[config.backend]["llm"])
         llmserver_mode_reload()
     else:
         raise ValueError("The backend isnt specified")

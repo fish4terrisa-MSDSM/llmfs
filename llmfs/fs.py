@@ -28,7 +28,7 @@ root = None
 |          |===user/===<speaker>/===<id>
 |
 |
-|===by-status/===<dirs like (un)proceeded>/===<id>      # /by-status is incompleted
+|===by-status/===<dirs like (un)processed>/===<id>      # /by-status is incompleted
 """
 # This initialize the root
 # TODO: Currently non dirs are actually writeable(deleteable), this need to be fixed
@@ -48,4 +48,6 @@ def root_init():
     root.append(vfs.DIR("by-index", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=data.walk_by_index))
     root.append(vfs.DIR("by-role", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=data.walk_by_role))
     # TODO: rework and finish /by-status Rahhhhhhhhhhh!!!
-    root.append(vfs.DIR("by-status", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=data.walk_by_status))
+    status = vfs.DIR("by-status", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC)
+    status.append(vfs.DIR("processed", Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=data.walk_by_status))
+    root.append(status)

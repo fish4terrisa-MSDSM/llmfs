@@ -20,7 +20,7 @@ all it's members are like this:
   "text": "<text>",
   "role": "<role>",
   "name": "<name>",         // Only for user chats, have no effects on other roles
-  "proceeded": <int: proceeded>
+  "processed": <int: processed>
 }
 All roles has a default prompt template, set in config toml. However, the 'null'
 role is special, it doesnt use any template and the text is added to the context
@@ -68,7 +68,7 @@ def get_response(_):
     #tmp["mtime"] = int(time.time())
     tmp["text"] = ret
     tmp["role"] = "assistant"
-    tmp["proceeded"] = 0
+    tmp["processed"] = 0
     data[tmp["id"]] = tmp
     return json.dumps(tmp)
 
@@ -93,7 +93,7 @@ def set_by_id(uuid: str, content: str):
                     if not tmp.get("name", False):
                         tmp["name"] = PLACEHOLDER_USER_NAME
         if data[uuid] != tmp:
-            tmp["proceeded"] = 0
+            tmp["processed"] = 0
         data[uuid] = tmp
         if content.get("index", False):
             # TODO: Correct error handling, for now it silently ignores.
@@ -105,7 +105,7 @@ def set_by_id(uuid: str, content: str):
         try:
             tmp = data[uuid]
             tmp["text"] = content
-            tmp["proceeded"] = 0
+            tmp["processed"] = 0
             data[uuid] = tmp
         except KeyError:
             # sliently drop it for now
@@ -201,14 +201,14 @@ def walk_by_role(_):
         dirs.append(vfs.DIR(value, Modes.DMDIR | Modes.DMREAD | Modes.DMEXEC, get_content=walk_by_role_role))
     return dirs
 
-# TODO: /by-status is highly unfinished, the "proceeded" or not handle logic
+# TODO: /by-status is highly unfinished, the "processed" or not handle logic
 # is damn freaking horrible, this function need a whole rework and the /by-status
 # structure needs to be redesigned
 def walk_by_status(status_filter):
     global data
     files = []
     for id_name, value in data.items():
-        if value["proceeded"] == int(status_filter == "proceeded"):
+        if value["processed"] == int(status_filter == "processed"):
             files.append(vfs.FILE(id_name, Modes.DMREAD | Modes.DMWRITE, get_content=get_by_id, set_content=set_by_id, rm=rm_by_id))
     return files
 
@@ -242,7 +242,7 @@ def append_to_data(_, content: str):
     else:
         tmp["role"] = "user"
         tmp["name"] = PLACEHOLDER_USER_NAME
-    tmp["proceeded"] = 0
+    tmp["processed"] = 0
     data[tmp["id"]] = tmp
     # TODO: Should we respect the index given to /ctl/new?
     # if so we should put the index move logic elsewhere
@@ -266,7 +266,7 @@ def apply_template():
         # For now apply_template() is only used when passing the text to the llm
         # TODO: maybe, just maybe we could put it at somewhere more reasonable
         # so we could use apply_template() elsewhere
-        target["proceeded"] = 1
+        target["processed"] = 1
         data[msg_id] = target
     # DEBUG
     print(tmp)
