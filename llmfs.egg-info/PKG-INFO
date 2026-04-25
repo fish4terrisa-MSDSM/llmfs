@@ -1,3 +1,22 @@
+Metadata-Version: 2.4
+Name: llmfs
+Version: 1.0.0
+Summary: LLM as 9p filesystem
+Author-email: fish4terrisa-MSDSM <flyingfish.msdsm@gmail.com>
+License-Expression: AGPL-3.0-only
+Project-URL: Homepage, https://github.com/fish4terrisa-MSDSM/llmfs
+Project-URL: Issues, https://github.com/fish4terrisa-MSDSM/llmfs/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: LICENSE.md
+Requires-Dist: py9
+Provides-Extra: vllm
+Requires-Dist: vllm; extra == "vllm"
+Dynamic: license-file
+
 # llmfs: LLM in 9p filesystem
 
 This is a 9p file server written in python, serve LLM service.
@@ -35,7 +54,6 @@ llmfs
 ## Dependencies
 
  - [py9](https://git.sr.ht/~emru/py9)
-   (my fork with bugfixes: [fish4terrisa-MSDSM/py9](https://github.com/fish4terrisa-MSDSM/py9))
  - vllm (Optional: Only if you want to use the vllm backend)
  - sglang (Optional: Only if you want to use the sglang backend)
 
