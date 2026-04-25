@@ -271,5 +271,5 @@ def apply_template():
     # DEBUG
     print(tmp)
     # TODO: Maybe a generation_prompt arg to decide add a prompt or not?
-    tmp += tmp + config.generation_prompt
+    tmp += config.generation_prompt
     return tmp
